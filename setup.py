@@ -8,7 +8,7 @@ __version__ = "0.0.0"
 
 REPO_NAME = "CNN-Classifier"
 AUTHOR_USER_NAME = "Manjunath-Bhashyam"
-SRC_REPO = "cnn-classifier"
+SRC_REPO = "deepclassifier"
 AUTHOR_EMAIL = "manjunathbhashyam1995@gmail.com"
 REQUIREMENT_FILE_NAME = "requirements.txt"
 HYPHEN_E_DOT = "-e ."
