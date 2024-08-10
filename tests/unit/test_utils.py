@@ -2,7 +2,7 @@ import pytest
 from deepclassifier.utils import read_yaml_file
 from pathlib import Path
 from box import ConfigBox
-from ensure import EnsureError
+from ensure.main import EnsureError
 
 class Test_read_yaml:
     yaml_files = ["tests/testdata/empty.yaml",
