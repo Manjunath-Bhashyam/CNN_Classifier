@@ -1,0 +1,38 @@
+stages:
+  data_ingestion:
+    cmd: python src/deepclassifier/pipeline/stage1_data_ingestion.py
+    deps:
+      - src/deepclassifier/pipeline/stage1_data_ingestion.py
+      - configs/config.yaml
+    outs:
+      - artifacts/data_ingestion/PetImages
+
+  prepare_base_model:
+    cmd: python src/deepclassifier/pipeline/stage2_prepare_base_model.py
+    deps:
+      - src/deepclassifier/pipeline/stage2_prepare_base_model.py
+      - configs/config.yaml
+    params:
+      - IMAGE_SIZE
+      - INCLUDE_TOP
+      - LEARNING_RATE
+      - WEIGHTS
+      - CLASSES
+    outs:
+      - artifacts/prepare_base_model
+
+  prepare_callbacks_and_training:
+    cmd: python src/deepclassifier/pipeline/stage3_prepare_callbacks_and_training.py
+    deps:
+      - src/deepclassifier/pipeline/stage3_prepare_callbacks_and_training.py
+      - src/deepclassifier/components/prepare_callbacks.py
+      - configs/config.yaml
+      - artifacts/data_ingestion/PetImages
+      - artifacts/prepare_base_model
+    params:
+      - EPOCHS
+      - BATCH_SIZE
+      - AUGMENTATION
+      - IMAGE_SIZE
+    outs:
+      - artifacts/training/model.keras

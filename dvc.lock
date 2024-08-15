@@ -1,0 +1,85 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/deepclassifier/pipeline/stage1_data_ingestion.py
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: 0ce363ea8868815453c26fd30eb490fc
+      size: 845
+    - path: src/deepclassifier/pipeline/stage1_data_ingestion.py
+      hash: md5
+      md5: 20e7b1a3470f87a7452b93e2e1562a02
+      size: 713
+    outs:
+    - path: artifacts/data_ingestion/PetImages
+      hash: md5
+      md5: 3a5cf86541f22c236620ce5b952ad684.dir
+      size: 848866410
+      nfiles: 24998
+  prepare_base_model:
+    cmd: python src/deepclassifier/pipeline/stage2_prepare_base_model.py
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: 0ce363ea8868815453c26fd30eb490fc
+      size: 845
+    - path: src/deepclassifier/pipeline/stage2_prepare_base_model.py
+      hash: md5
+      md5: bfa75af7d3decfcd08372bc1fe644c2d
+      size: 811
+    params:
+      params.yaml:
+        CLASSES: 2
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 48638d18dc61dba08870844e9131c546.dir
+      size: 118064917
+      nfiles: 2
+  prepare_callbacks_and_training:
+    cmd: python src/deepclassifier/pipeline/stage3_prepare_callbacks_and_training.py
+    deps:
+    - path: artifacts/data_ingestion/PetImages
+      hash: md5
+      md5: 3a5cf86541f22c236620ce5b952ad684.dir
+      size: 848866410
+      nfiles: 24998
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 48638d18dc61dba08870844e9131c546.dir
+      size: 118064917
+      nfiles: 2
+    - path: configs/config.yaml
+      hash: md5
+      md5: 0ce363ea8868815453c26fd30eb490fc
+      size: 845
+    - path: src/deepclassifier/components/prepare_callbacks.py
+      hash: md5
+      md5: 6ddff99f345d44b6d840cebcca021908
+      size: 894
+    - path: src/deepclassifier/pipeline/stage3_prepare_callbacks_and_training.py
+      hash: md5
+      md5: 81de4cc2fa5aa79bf5bfc54b9c6b3f69
+      size: 1036
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 1
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.keras
+      hash: md5
+      md5: 8239f74be98233b620e435274f78308d
+      size: 59136909
