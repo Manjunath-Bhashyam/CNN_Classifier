@@ -36,3 +36,17 @@ stages:
       - IMAGE_SIZE
     outs:
       - artifacts/training/model.keras
+
+  evaluation:
+    cmd: python src/deepclassifier/pipeline/stage4_evaluation.py
+    deps:
+      - src/deepclassifier/pipeline/stage4_evaluation.py
+      - configs/config.yaml
+      - artifacts/data_ingestion/PetImages
+      - artifacts/training/model.keras
+    params:
+      - BATCH_SIZE
+      - IMAGE_SIZE
+    metrics:
+      - scores.json:
+          cache: false

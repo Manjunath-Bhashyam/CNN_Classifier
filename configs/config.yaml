@@ -19,3 +19,6 @@ prepare_callbacks:
 training:
   root_dir: artifacts/training
   trained_model_path: artifacts/training/model.keras
+
+evaluation:
+  train_eval_data: artifacts/data_ingestion/PetImages
