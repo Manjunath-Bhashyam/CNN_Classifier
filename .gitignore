@@ -165,7 +165,9 @@ cython_debug/
 *.vscode
 *.jpg
 *.zip
-*/*/PetImages
+artifacts/data_ingestion/PetImages
 artifacts/prepare_base_model/*
 artifacts/prepare_callbacks/*
 artifacts/training/*
+mlruns/
+research/logs
